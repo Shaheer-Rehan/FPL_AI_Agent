@@ -54,14 +54,15 @@ Following is an initial draft of the database schema. It is subject to change as
 
 ## 6. Storage Plan
 * Raw Data
-  * Stored in ```/data/raw/```
+  * Keep JSON dumps in ```/data/raw/``` (for reproducibility + debugging)
   * Format: JSON (direct API dumps)
   * ⚠️ Ignored in Git (```.gitignore```)
+  * This ensures we always have a frozen copy of original API responses.
+* Database Engine
+  * Start with SQLite (lightweight, file-based, no setup cost)
 * Processed Data
-  * Stored in ```/data/processed/```
-  * Format: Parquet (fast + pandas compatible)
-* Optional
-  * SQLite DB (```fpl_data.db```) for compact, query-friendly storage
+  * All cleaned + transformed data written into SQL tables (```players```, ```teams```, ```fixtures```, ```gameweeks```, ```lineup_likelihood```).
+  * Easy to run SQL queries
 
 ## 7. Data Ingestion Workflow
 1. Fetch Phase
