@@ -4,6 +4,8 @@ title: "Cheating at FPL using AI Agents - Kickoff"
 ---
 The referee blows the whistle, and the game begins!
 
-Today marks the start of my journey into building an AI-powered Fantasy Premier League Agent. My strike partner for this match (Yes, I'm continuing with the metaphor,) is the ever-reliable [@HussainAhmed10](https://github.com/HussainAhmed10). Together, we hope to write the next important chapter in Fantasy Premier League by introducing Agentic AI to the beautiful game. But hey, if we can't change the game or ruffle a few feathers, at least we'll have some fun along the way. 
+Today marks the start of my journey into building an AI-powered Fantasy Premier League Agent. It’s just me, my laptop, and far too many hours staring at player stats—trying to bring Agentic AI into the beautiful game. If nothing else, I’ll at least have an excuse when my transfers flop: “Don’t blame me, blame the algorithm!”
 
-Over the coming months, we'll share progress updates, challenges, and results of our FPL AI Agent. Let's see where cheating gets us!
+Over the coming months, I’ll share progress updates, experiments, and (hopefully) a few wins along the way. Who knows—maybe I’ll even teach an AI how to avoid captaining the wrong Haaland.
+
+Let’s see how far a one-person AI dream team can go!
