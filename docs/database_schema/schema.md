@@ -51,3 +51,32 @@ Following is an initial draft of the database schema. It is subject to change as
 | `player_id`        | INT (FK) | Player ID                                                                         |
 | `gw_id`            | INT (FK) | Gameweek                                                                          |
 | `expected_minutes` | FLOAT    | Predicted minutes (proxy: rolling avg + injury flag; later → FFS API probability) |
+
+## 6. Storage Plan
+* Raw Data
+  * Stored in ```/data/raw/```
+  * Format: JSON (direct API dumps)
+  * ⚠️ Ignored in Git (```.gitignore```)
+* Processed Data
+  * Stored in ```/data/processed/```
+  * Format: Parquet (fast + pandas compatible)
+* Optional
+  * SQLite DB (```fpl_data.db```) for compact, query-friendly storage
+
+## 7. Data Ingestion Workflow
+1. Fetch Phase
+    * Call FPL API → save raw JSON
+2. Transform Phase
+    * Parse raw → structured tables (Players, Fixtures, Teams, etc.)
+3. Enrichment Phase
+    * Compute ```expected_minutes``` proxy
+    * Add lineup likelihood flags
+4. Store Phase
+    * Save as Parquet for experiments
+    * (Optional) Write to SQLite
+
+## 8. Testing and Validation
+* Ensure all ```player_id``` map to valid ```team_id```.
+* Fixtures align correctly with GW deadlines.
+* ```expected_minutes``` values: ```0 ≤ x ≤ 90```.
+* No nulls in key fields (```player_id```, ```gw_id```, ```fixture_id```).
