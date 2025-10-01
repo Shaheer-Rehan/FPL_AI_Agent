@@ -2,20 +2,50 @@
 Following is an initial draft of the database schema. It is subject to change as per the AI Agent's requirements or data availability limitations.
 
 ## 1. Players Table
-| Column Name        | Type       | Description                                                    |
-| ------------------ | ---------- | -------------------------------------------------------------- |
-| `player_id`        | INT        | Unique ID (from FPL API)                                       |
-| `name`             | STRING     | Player full name                                               |
-| `team_id`          | INT (FK)   | Link to Teams table                                            |
-| `position`         | STRING     | Position (GK, DEF, MID, FWD)                                   |
-| `price`            | FLOAT      | Current price in £m                                            |
-| `ownership`        | FLOAT      | % ownership across managers                                    |
-| `form`             | FLOAT      | Form rating (from API)                                         |
-| `bps`              | INT        | Bonus points system value                                      |
-| `injury_status`    | STRING     | Status (fit, injured, doubtful, suspended)                     |
-| `minutes_played`   | INT        | Minutes played last GW                                         |
-| `points_history`   | JSON/ARRAY | List of past GW points                                         |
-| `expected_minutes` | FLOAT      | Proxy → rolling avg minutes / later replaced with FFS lineup % |
+| Column Name                         | Type       | Description                                                    |
+| ----------------------------------- | ---------- | -------------------------------------------------------------- |
+| `player_id`                         | INT        | Unique ID (from FPL API)                                       |
+| `name`                              | STRING     | Player full name                                               |
+| `team_id`                           | INT (FK)   | Link to Teams table                                            |
+| `gw_id`                             | INT        | GW number                                                      |
+| `position`                          | STRING     | Position (GK, DEF, MID, FWD)                                   |
+| `price`                             | FLOAT      | Current price in £m                                            |
+| `ownership`                         | FLOAT      | % ownership across managers                                    |
+| `form`                              | FLOAT      | Form rating (from API)                                         |
+| `name`                              | STRING     | Player full name                                               |
+| `team_id`                           | INT (FK)   | Link to Teams table                                            |
+| `position`                          | STRING     | Position (GK, DEF, MID, FWD)                                   |
+| `price`                             | FLOAT      | Current price in £m                                            |
+| `ownership`                         | FLOAT      | % ownership across managers                                    |
+| `form`                              | FLOAT      | Form rating (from API)                                         |
+| `bps`                               | INT        | Bonus points system value                                      |
+| `bonus`                             | INT        | Bonus points scored                                            |
+| `injury_status`                     | STRING     | Status (fit, injured, doubtful, suspended)                     |
+| `minutes_played`                    | INT        | Minutes played                                                 |
+| `goals_scored`                      | INT        | Goals scored                                                   |
+| `assists`                           | INT        | Assists                                                        |
+| `clean_sheets`                      | INT        | Clean sheets                                                   |
+| `goals_conceded`                    | INT        | Goals conceded                                                 |
+| `own_goals`                         | INT        | Own goals scored                                               |
+| `penalties_saved`                   | INT        | Penalties saved                                                |
+| `penalties_missed`                  | INT        | Penalties missed                                               |
+| `yellow_cards`                      | INT        | Yellow cards                                                   |
+| `red_cards`                         | INT        | Red cards                                                      |
+| `saves`                             | INT        | Saves                                                          |
+| `influence`                         | INT        | Influence                                                      |
+| `creativity`                        | INT        | Creativity                                                     |
+| `threat`                            | INT        | Threat                                                         |
+| `ict_index`                         | INT        | ICT Index                                                      |
+| `clearances_blocks_interceptions`   | INT        | Clearances, blocks and interceptions                           |
+| `recoveries`                        | INT        | Recoveries                                                     |
+| `tackles`                           | INT        | Tackles                                                        |
+| `defensive_contribution`            | INT        | Defensive Contribution                                         |
+| `expected_goals`                    | INT        | Expected Goals                                                 |
+| `expected_assists`                  | INT        | Expected Assists                                               |
+| `expected_goal_involvements`        | INT        | Expected Goal Involvements                                     |
+| `expected_goals_conceded`           | INT        | Expected Goals Conceded                                        |
+| `points_history`                    | JSON/ARRAY | List of past GW points                                         |
+| `expected_minutes`                  | FLOAT      | Proxy → rolling avg minutes / later replaced with FFS lineup % |
 
 ## 2. Teams Table
 | Column Name     | Type   | Description                    |
@@ -30,7 +60,7 @@ Following is an initial draft of the database schema. It is subject to change as
 | Column Name       | Type     | Description                     |
 | ----------------- | -------- | ------------------------------- |
 | `fixture_id`      | INT      | Unique fixture ID               |
-| `gameweek`        | INT      | GW number                       |
+| `gw_id`           | INT      | GW number                       |
 | `home_team_id`    | INT (FK) | Home team                       |
 | `away_team_id`    | INT (FK) | Away team                       |
 | `kickoff_time`    | DATETIME | Scheduled start time            |
