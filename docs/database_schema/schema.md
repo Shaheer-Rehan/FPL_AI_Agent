@@ -40,12 +40,13 @@ Following is an initial draft of the database schema. It is subject to change as
 | `recoveries`                        | INT        | Recoveries                                                     |
 | `tackles`                           | INT        | Tackles                                                        |
 | `defensive_contribution`            | INT        | Defensive Contribution                                         |
-| `expected_goals`                    | INT        | Expected Goals                                                 |
-| `expected_assists`                  | INT        | Expected Assists                                               |
-| `expected_goal_involvements`        | INT        | Expected Goal Involvements                                     |
-| `expected_goals_conceded`           | INT        | Expected Goals Conceded                                        |
+| `expected_goals`                    | FLOAT      | Expected Goals                                                 |
+| `expected_assists`                  | FLOAT      | Expected Assists                                               |
+| `expected_goal_involvements`        | FLOAT      | Expected Goal Involvements                                     |
+| `expected_goals_conceded`           | FLOAT      | Expected Goals Conceded                                        |
 | `points_history`                    | JSON/ARRAY | List of past GW points                                         |
 | `expected_minutes`                  | FLOAT      | Proxy → rolling avg minutes / later replaced with FFS lineup % |
+| `expected_points`                   | FLOAT      | Expected points                                                |
 
 ## 2. Teams Table
 | Column Name     | Type   | Description                    |
