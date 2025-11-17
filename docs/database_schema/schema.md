@@ -90,7 +90,7 @@ Following is an initial draft of the database schema. It is subject to change as
   * ⚠️ Ignored in Git (```.gitignore```)
   * This ensures we always have a frozen copy of original API responses.
 * Database Engine
-  * Start with SQLite (lightweight, file-based, no setup cost)
+  * We start with SQLite (lightweight, file-based, no setup cost)
 * Processed Data
   * All cleaned + transformed data written into SQL tables (```players```, ```teams```, ```fixtures```, ```gameweeks```, ```lineup_likelihood```).
   * Easy to run SQL queries
@@ -105,7 +105,7 @@ Following is an initial draft of the database schema. It is subject to change as
     * Add lineup likelihood flags
 4. Store Phase
     * Save as Parquet for experiments
-    * (Optional) Write to SQLite
+    * Write to SQLite
 
 ## 8. Testing and Validation
 * Ensure all ```player_id``` map to valid ```team_id```.
