@@ -9,7 +9,7 @@ Following is an initial draft of the database schema. It is subject to change as
 | `team_id`                           | INT (FK)   | Link to Teams table                                            |
 | `position`                          | STRING     | Position (GK, DEF, MID, FWD)                                   |
 
-## 2. PlayerGameweekStats Table
+## 2. Player Gameweek Stats Table
 | Column Name                         | Type       | Description                                                    |
 | ----------------------------------- | ---------- | -------------------------------------------------------------- |
 | `player_id`                         | INT        | Unique ID (from FPL API) - composite primary key i/ii          |
@@ -53,7 +53,6 @@ Following is an initial draft of the database schema. It is subject to change as
 | `team_name`     | STRING | Team full name                 |
 | `strength_home` | INT    | Relative team strength at home |
 | `strength_away` | INT    | Relative team strength away    |
-| `fixture_ids`   | ARRAY  | Links to fixtures              |
 
 ## 4. Fixtures Table
 | Column Name       | Type     | Description                     |
@@ -71,14 +70,15 @@ Following is an initial draft of the database schema. It is subject to change as
 | --------------- | ---------- | ----------------------------------------------- |
 | `gw_id`         | INT        | GW number                                       |
 | `deadline_time` | DATETIME   | Official GW deadline                            |
-| `chip_usage`    | JSON/ARRAY | Aggregate chip usage (optional, future feature) |
 
-## 6. Lineup Likelihood Table
-| Column Name        | Type     | Description                                                                       |
-| ------------------ | -------- | --------------------------------------------------------------------------------- |
-| `player_id`        | INT (FK) | Player ID                                                                         |
-| `gw_id`            | INT (FK) | Gameweek                                                                          |
-| `expected_minutes` | FLOAT    | Predicted minutes (proxy: rolling avg + injury flag; later → FFS API probability) |
+## 6. Agent Chip Usage Table
+| Column Name      | Type       | Description                                                                           |
+| ---------------- | ---------- | ------------------------------------------------------------------------------------- |
+| `simulation_id`  | INT        | Unique ID for each MCTS rollout                                                       |
+| `gw_id`          | INT        | GW number where the chip was used                                                     |
+| `chip_name`      | STRING     | One of: `wildcard`, `free_hit`, `bench_boost`, `triple_captain`, `assistant_manager`  |
+### PRIMARY KEY: 
+(`simulation_id`, `chip_name`)
 
 ## 7. Storage Plan
 * Raw Data
