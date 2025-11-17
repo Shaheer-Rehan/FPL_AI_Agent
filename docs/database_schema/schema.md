@@ -4,17 +4,16 @@ Following is an initial draft of the database schema. It is subject to change as
 ## 1. Players Table
 | Column Name                         | Type       | Description                                                    |
 | ----------------------------------- | ---------- | -------------------------------------------------------------- |
-| `player_id`                         | INT        | Unique ID (from FPL API)                                       |
-| `name`                              | STRING     | Player full name                                               |
-| `team_id`                           | INT (FK)   | Link to Teams table                                            |
-| `gw_id`                             | INT        | GW number                                                      |
-| `position`                          | STRING     | Position (GK, DEF, MID, FWD)                                   |
-| `price`                             | FLOAT      | Current price in £m                                            |
-| `ownership`                         | FLOAT      | % ownership across managers                                    |
-| `form`                              | FLOAT      | Form rating (from API)                                         |
+| `player_id`                         | INT (PK)   | Unique ID (from FPL API)                                       |
 | `name`                              | STRING     | Player full name                                               |
 | `team_id`                           | INT (FK)   | Link to Teams table                                            |
 | `position`                          | STRING     | Position (GK, DEF, MID, FWD)                                   |
+
+## 2. PlayerGameweekStats Table
+| Column Name                         | Type       | Description                                                    |
+| ----------------------------------- | ---------- | -------------------------------------------------------------- |
+| `player_id`                         | INT        | Unique ID (from FPL API) - composite primary key i/ii          |
+| `gw_id`                             | INT        | GW number - composite primary key ii/ii                        |
 | `price`                             | FLOAT      | Current price in £m                                            |
 | `ownership`                         | FLOAT      | % ownership across managers                                    |
 | `form`                              | FLOAT      | Form rating (from API)                                         |
@@ -44,11 +43,10 @@ Following is an initial draft of the database schema. It is subject to change as
 | `expected_assists`                  | FLOAT      | Expected Assists                                               |
 | `expected_goal_involvements`        | FLOAT      | Expected Goal Involvements                                     |
 | `expected_goals_conceded`           | FLOAT      | Expected Goals Conceded                                        |
-| `points_history`                    | JSON/ARRAY | List of past GW points                                         |
 | `expected_minutes`                  | FLOAT      | Proxy → rolling avg minutes / later replaced with FFS lineup % |
 | `expected_points`                   | FLOAT      | Expected points                                                |
 
-## 2. Teams Table
+## 3. Teams Table
 | Column Name     | Type   | Description                    |
 | --------------- | ------ | ------------------------------ |
 | `team_id`       | INT    | Unique team ID                 |
@@ -57,7 +55,7 @@ Following is an initial draft of the database schema. It is subject to change as
 | `strength_away` | INT    | Relative team strength away    |
 | `fixture_ids`   | ARRAY  | Links to fixtures              |
 
-## 3. Fixtures Table
+## 4. Fixtures Table
 | Column Name       | Type     | Description                     |
 | ----------------- | -------- | ------------------------------- |
 | `fixture_id`      | INT      | Unique fixture ID               |
@@ -68,22 +66,21 @@ Following is an initial draft of the database schema. It is subject to change as
 | `difficulty_home` | INT      | Fixture difficulty (API rating) |
 | `difficulty_away` | INT      | Fixture difficulty (API rating) |
 
-## 4. Gameweeks Table
+## 5. Gameweeks Table
 | Column Name     | Type       | Description                                     |
 | --------------- | ---------- | ----------------------------------------------- |
 | `gw_id`         | INT        | GW number                                       |
 | `deadline_time` | DATETIME   | Official GW deadline                            |
 | `chip_usage`    | JSON/ARRAY | Aggregate chip usage (optional, future feature) |
 
-
-## 5. Lineup Likelihood Table
+## 6. Lineup Likelihood Table
 | Column Name        | Type     | Description                                                                       |
 | ------------------ | -------- | --------------------------------------------------------------------------------- |
 | `player_id`        | INT (FK) | Player ID                                                                         |
 | `gw_id`            | INT (FK) | Gameweek                                                                          |
 | `expected_minutes` | FLOAT    | Predicted minutes (proxy: rolling avg + injury flag; later → FFS API probability) |
 
-## 6. Storage Plan
+## 7. Storage Plan
 * Raw Data
   * Keep JSON dumps in ```/data/raw/``` (for reproducibility + debugging)
   * Format: JSON (direct API dumps)
@@ -92,10 +89,10 @@ Following is an initial draft of the database schema. It is subject to change as
 * Database Engine
   * We start with SQLite (lightweight, file-based, no setup cost)
 * Processed Data
-  * All cleaned + transformed data written into SQL tables (```players```, ```teams```, ```fixtures```, ```gameweeks```, ```lineup_likelihood```).
+  * All cleaned + transformed data written into SQL tables (```players```, ```player_gameweek_stats```, ```teams```, ```fixtures```, ```gameweeks```, ```lineup_likelihood```).
   * Easy to run SQL queries
 
-## 7. Data Ingestion Workflow
+## 8. Data Ingestion Workflow
 1. Fetch Phase
     * Call FPL API → save raw JSON
 2. Transform Phase
@@ -107,7 +104,7 @@ Following is an initial draft of the database schema. It is subject to change as
     * Save as Parquet for experiments
     * Write to SQLite
 
-## 8. Testing and Validation
+## 9. Testing and Validation
 * Ensure all ```player_id``` map to valid ```team_id```.
 * Fixtures align correctly with GW deadlines.
 * ```expected_minutes``` values: ```0 ≤ x ≤ 90```.
